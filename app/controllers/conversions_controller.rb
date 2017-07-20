@@ -7,7 +7,8 @@ class ConversionsController < ApplicationController
       Conversion.create(post_params.slice(:base, :target))
     end
 
-    render json: { conversion: '1 US dollar = 0.8927 euros' }
+    result = Conversion.convert_via_google(post_params.slice(:base, :target))
+    render json: { conversion: result }
   end
 
   private

@@ -46,12 +46,16 @@ RSpec.describe ConversionsController, type: :controller do
 
       context 'conversions existing' do
         context 'conversions made for the last 59 seconds' do
+          let(:conversion) { '1 US dollar = 0.8927 euros' }
+
           it 'reuse conversion' do
+            allow(Conversion).to receive(:convert_via_google).and_return(conversion)
+
             expect {
               post :create, params: { base: 'USD', target: 'EURO', format: :json  }
             }.to change(Conversion, :count).by(1)
 
-            expect(JSON.parse(response.body)['conversion']).to eq('1 US dollar = 0.8927 euros')
+            expect(JSON.parse(response.body)['conversion']).to eq(conversion)
 
             travel 59.seconds do
               expect {
@@ -59,7 +63,7 @@ RSpec.describe ConversionsController, type: :controller do
               }.to_not change(Conversion, :count)
             end
 
-            expect(JSON.parse(response.body)['conversion']).to eq('1 US dollar = 0.8927 euros')
+            expect(JSON.parse(response.body)['conversion']).to eq(conversion)
           end
         end
 
