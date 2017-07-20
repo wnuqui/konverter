@@ -41,3 +41,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 group :test do
   gem 'simplecov', require: false
 end
+
+gem 'mechanize'
