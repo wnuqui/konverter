@@ -1,24 +1,8 @@
-# README
+# konverter
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A Rails application that convert currency.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Specifications
+- [ ] Convert currency to another currency using a popular source/tool
+- [ ] Save/cache conversion for the next 60 seconds
+- [ ] After 60 seconds, convert using the the popular source/tool again
