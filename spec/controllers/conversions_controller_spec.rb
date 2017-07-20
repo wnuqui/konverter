@@ -6,7 +6,7 @@ RSpec.describe ConversionsController, type: :controller do
   describe 'POST create' do
     it 'has a 200 status code' do
       post :create, params: { base: 'USD', target: 'EURO'}
-      expect(response.status).to eq(200)
+      expect(response).to be_http_200
     end
 
     context 'JSON response' do
