@@ -3,9 +3,13 @@ require 'rails_helper'
 RSpec.describe ConversionsController, type: :controller do
   include ActiveSupport::Testing::TimeHelpers
 
+  let(:params) do
+    { base: 'USD', target: 'EURO', format: :json  }
+  end
+
   describe 'POST create' do
     it 'has a 200 status code' do
-      post :create, params: { base: 'USD', target: 'EURO'}
+      post :create, params: params
       expect(response).to be_http_200
     end
 
@@ -20,7 +24,7 @@ RSpec.describe ConversionsController, type: :controller do
 
       context 'json accept type' do
         it 'responds JSON content' do
-          post :create, params: { base: 'USD', target: 'EURO', format: :json  }
+          post :create, params: params
           expect(response.content_type).to eq('application/json')
         end
       end
@@ -41,7 +45,7 @@ RSpec.describe ConversionsController, type: :controller do
           allow(Conversion).to receive(:convert_via_google).and_return(conversion)
 
           expect {
-            post :create, params: { base: 'USD', target: 'EURO', format: :json  }
+            post :create, params: params
           }.to change(Conversion, :count).by(1)
 
           expect(JSON.parse(response.body)['conversion']).to eq(conversion)
@@ -54,14 +58,14 @@ RSpec.describe ConversionsController, type: :controller do
             allow(Conversion).to receive(:convert_via_google).and_return(conversion)
 
             expect {
-              post :create, params: { base: 'USD', target: 'EURO', format: :json  }
+              post :create, params: params
             }.to change(Conversion, :count).by(1)
 
             expect(JSON.parse(response.body)['conversion']).to eq(conversion)
 
             travel 59.seconds do
               expect {
-                post :create, params: { base: 'USD', target: 'EURO', format: :json  }
+                post :create, params: params
               }.to_not change(Conversion, :count)
             end
 
@@ -74,14 +78,14 @@ RSpec.describe ConversionsController, type: :controller do
             allow(Conversion).to receive(:convert_via_google).and_return(conversion)
 
             expect {
-              post :create, params: { base: 'USD', target: 'EURO', format: :json  }
+              post :create, params: params
             }.to change(Conversion, :count).by(1)
 
             expect(JSON.parse(response.body)['conversion']).to eq(conversion)
 
             travel 61.seconds do
               expect {
-                post :create, params: { base: 'USD', target: 'EURO', format: :json  }
+                post :create, params: params
               }.to change(Conversion, :count).by(1)
             end
 
