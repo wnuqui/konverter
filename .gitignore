@@ -16,3 +16,4 @@
 .byebug_history
 coverage
 .ruby-version
+config/database.yml
