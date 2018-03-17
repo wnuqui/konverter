@@ -3,8 +3,10 @@ class Conversion < ApplicationRecord
 
   class << self
     def convert(options)
-      fetch_cached_or_create_conversion options
-      convert_via_google options
+      conversion = fetch_cached_or_create_conversion(options)
+      result = convert_via_google(options)
+      conversion.update_attribute(:result, result)
+      result
     end
 
     private
@@ -12,7 +14,7 @@ class Conversion < ApplicationRecord
     def fetch_cached_or_create_conversion(options)
       now = Time.now
       conversion = where({ created_at: (now - 1.minute)..now }).where(options).first
-      create(options) if conversion.nil?
+      conversion.nil? ? create(options) : conversion
     end
 
     def convert_currency_url(options)

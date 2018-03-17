@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20170720103544) do
   create_table "conversions", force: :cascade do |t|
     t.string "base"
     t.string "target"
+    t.string "result"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
